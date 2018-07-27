@@ -4,102 +4,77 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.oluwaseunshad.myapplication.database.model.DatabaseHelper;
+
 public class SubmitActivity extends AppCompatActivity {
 
-    Button editButton;
-    Button submitButton;
-    TextView fullname;
-    TextView emailadd;
-    TextView studentID;
-    TextView countryOrigin;
-    TextView researchInterest;
-    TextView hobbies;
-    TextView progLang;
-    TextView interestFact;
-    TextView gradPlan;
-    TextView attractedBG;
-    public String name;
-    public String email;
-    public String id;
-    public String researchInt;
-    public String country;
-    public String my_hobbies;
-    public String language;
-    public String plan;
-    public String fact;
-    public String bgAttraction;
-    public Boolean flag = false;
-
-    private DatabaseHelper db;
-
+    EditText name;
+    EditText emailAdd;
+    EditText studentID;
+    EditText researchInterest;
+    EditText country;
+    EditText hobbies;
+    EditText progLang;
+    EditText gradPlan;
+    EditText attractBG;
+    EditText factAboutYou;
+    Button continueBtn;
+    DatabaseHelper db;
+    String studentName, studentEmail, id, researchInt, countryOrigin, my_hobbies, language, plan, bgAttraction, fact;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.student_info_edit_submit);
-
+        setContentView(R.layout.student_info_edit);
         db = new DatabaseHelper(this);
 
-        Intent intent = getIntent();
-        name = intent.getStringExtra("name");
-        fullname.setText(name);
-        email = intent.getStringExtra("email");
-        emailadd.setText(email);
-        id = intent.getStringExtra("studentID");
-        studentID.setText(id);
-        researchInt = intent.getStringExtra("researchInterest");
-        researchInterest.setText(researchInt);
-        country = intent.getStringExtra("country");
-        countryOrigin.setText(country);
-        my_hobbies = intent.getStringExtra("hobbies");
-        hobbies.setText(my_hobbies);
-        language = intent.getStringExtra("progLang");
-        progLang.setText(language);
-        plan = intent.getStringExtra("gradPlan");
-        gradPlan.setText(plan);
-        fact = intent.getStringExtra("factAboutYou");
-        interestFact.setText(fact);
-        bgAttraction = intent.getStringExtra("attractBG");
-        attractedBG.setText(bgAttraction);
+        name = findViewById(R.id.fullName);
+        emailAdd = findViewById(R.id.emailaddress);
+        studentID = findViewById(R.id.studentID);
+        researchInterest = findViewById(R.id.researchInterest);
+        country = findViewById(R.id.countryOrigin);
+        hobbies = findViewById(R.id.hobbies);
+        progLang =findViewById(R.id.progLang);
+        gradPlan = findViewById(R.id.gradPlan);
+        attractBG = findViewById(R.id.attractBG);
+        factAboutYou = findViewById(R.id.interestFact);
+        continueBtn = findViewById(R.id.continueBtn);
+        AddData();
 
-        editButton = (Button) findViewById(R.id.button);
-        submitButton = (Button) findViewById(R.id.submit_button);
-        editButton.setOnClickListener(new View.OnClickListener() {
+    }
 
+    public void AddData(){
+        continueBtn.setOnClickListener(
+                new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                flag = true;
-                Intent intent = new Intent(SubmitActivity.this, InputStudentInfoActivity.class);
-                intent.putExtra("name", fullname.getText().toString());
-                intent.putExtra("email", emailadd.getText().toString());
-                intent.putExtra("studentID", studentID.getText().toString());
-                intent.putExtra("researchInterest", researchInterest.getText().toString());
-                intent.putExtra("country", countryOrigin.getText().toString());
-                intent.putExtra("hobbies", hobbies.getText().toString());
-                intent.putExtra("progLang", progLang.getText().toString());
-                intent.putExtra("gradPlan", gradPlan.getText().toString());
-                intent.putExtra("attractBG", attractedBG.getText().toString());
-                intent.putExtra("factAboutYou", interestFact.getText().toString());
-                startActivity(intent);
-            }
-        });
+            public void onClick(View v){
+                studentName = name.getText().toString();
+                studentEmail = emailAdd.getText().toString();
+                id = studentID.getText().toString();
+                researchInt = researchInterest.getText().toString();
+                countryOrigin = country.getText().toString();
+                my_hobbies = hobbies.getText().toString();
+                language = progLang.getText().toString();
+                plan = gradPlan.getText().toString();
+                bgAttraction = attractBG.getText().toString();
+                fact = factAboutYou.getText().toString();
 
+                boolean isInserted = db.insertValues(studentName, id, researchInt, countryOrigin, my_hobbies, language, plan, bgAttraction, fact, studentEmail);
+                if (isInserted)
+                    Toast.makeText(SubmitActivity.this, "Data inserted", Toast.LENGTH_LONG).show();
+                else
+                    Toast.makeText(SubmitActivity.this, "Data not inserted", Toast.LENGTH_LONG).show();
 
-        submitButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                StudentInformation student = new StudentInformation(name, email, id, researchInt, country, my_hobbies, language, plan, bgAttraction, fact);
-                db.insertValues(student);
                 Intent intent = new Intent(SubmitActivity.this, LastActivity.class);
-                finish();
+                //finish();
                 startActivity(intent);
-            }
-        });
 
+            }
+        }
+        );
     }
 
 }

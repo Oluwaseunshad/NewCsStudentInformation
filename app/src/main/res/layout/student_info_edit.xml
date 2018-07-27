@@ -12,12 +12,12 @@
         android:layout_width="125dp"
         android:layout_height="37dp"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_marginTop="54dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="48dp"
         android:layout_weight="1"
         android:text="Full Name"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/fullName"
@@ -35,12 +35,11 @@
         android:layout_width="125dp"
         android:layout_height="37dp"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_marginTop="54dp"
+        android:layout_below="@+id/fullName"
         android:layout_weight="1"
         android:text="Email address"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/emailaddress"
@@ -235,7 +234,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/interestFact"
-        android:text="Continue" />
+        android:text="Submit" />
 
 </RelativeLayout>
 </ScrollView>

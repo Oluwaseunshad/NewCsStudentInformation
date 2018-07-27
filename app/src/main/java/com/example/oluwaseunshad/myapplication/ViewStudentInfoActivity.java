@@ -20,7 +20,7 @@ public class ViewStudentInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.student_information);
-
+        table_layout = findViewById(R.id.tableLayout1);
         db = new DatabaseHelper(this);
         Cursor c = db.readEntry();
 

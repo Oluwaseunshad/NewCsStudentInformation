@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Intent i = new Intent(getApplicationContext(),InputStudentInfoActivity.class);
+                Intent i = new Intent(getApplicationContext(),SubmitActivity.class);
                 startActivity(i);
             }
         });
